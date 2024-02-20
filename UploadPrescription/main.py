@@ -4,9 +4,11 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import creds
 import base64
+from flask_cors import CORS
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 # Set the Stable API version when creating a new client
 client = MongoClient(creds.APP_URI, server_api=ServerApi('1'))

@@ -1,9 +1,9 @@
-# app.py
-
 from flask import Flask, request, jsonify
 from pharmaquill import find_substitute_details
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/get_substitute', methods=['GET'])
 def get_substitute():

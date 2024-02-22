@@ -100,10 +100,36 @@ class AllDoctorsResource(Resource):
 
         except Exception as e:
             return {'status': 'error', 'message': str(e)}
+        
 
-# Add the DoctorResource and AllDoctorsResource to the API
+
+class DoctorsByPharmacyResource(Resource):
+    def get(self):
+        try:
+            # Retrieve doctors based on pharmacy_name if provided in the query parameters
+            pharmacy_name = request.args.get('pharmacy_name')
+            query = {}  # Default query
+
+            if pharmacy_name:
+                query['pharmacy_name'] = pharmacy_name
+
+            all_doctors = list(doctors_collection.find(query))
+
+            formatted_doctors = []
+            for doctor in all_doctors:
+                doctor['_id'] = str(doctor['_id'])
+                formatted_doctors.append(doctor)
+
+            return {'status': 'success', 'doctors': formatted_doctors}
+
+        except Exception as e:
+            return {'status': 'error', 'message': str(e)}
+
+
+# Add the DoctorResource and AllDoctorsResource and doctorsByPharmacy to the API
 api.add_resource(DoctorResource, '/doctors')
 api.add_resource(AllDoctorsResource, '/all_doctors')
+api.add_resource(DoctorsByPharmacyResource, '/doctors_by_pharmacy')
 
 if __name__ == '__main__':
     app.run(debug=True)

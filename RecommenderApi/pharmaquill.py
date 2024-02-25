@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 
-med_data = pd.read_csv("medicine_dataset.csv")
+med_data = pd.read_csv("RecommenderApi\medicine_dataset.csv")
 
 
 # %% [markdown]
@@ -131,12 +131,13 @@ def find_side_effect(medicine_name):
             return row[1]['sideEffect']
     return None
 
-find_substitute("azithral 500 tablet")
+
 find_side_effect("Fightox 625 Tablet")
 
 
 # %%
 find_substitute('Trulimax 500mg Tablet')
+find_substitute("azithral 500 tablet")
 
 # %%
 def find_substitute_details(medicine_name, limit=10):

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from pharmaquill import find_substitute_details
+from RecommenderApi.pharmaquill import find_substitute
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -14,12 +14,10 @@ def get_substitute():
     if not medicine_name:
         return jsonify({'error': 'Missing medicine_name parameter'}), 400
 
-    original_chemical_class, substitutes, substitute_details = find_substitute_details(medicine_name)
+    _, substitutes, _ = find_substitute(medicine_name)
 
     response_data = {
-        'original_chemical_class': original_chemical_class,
-        'substitutes': substitutes,
-        'substitute_details': substitute_details
+        'substitutes': substitutes
     }
 
     return jsonify(response_data)
